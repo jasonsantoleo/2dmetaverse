@@ -9,7 +9,9 @@
     "check-types": "turbo run check-types"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
     "prettier": "^3.5.3",
     "turbo": "^2.5.4",
     "typescript": "5.8.2"
@@ -18,9 +20,11 @@
   "engines": {
     "node": ">=18"
   },
-  
+  "preinstall": "npx only-allow pnpm",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "prisma": "^6.10.1"
   }
 }
