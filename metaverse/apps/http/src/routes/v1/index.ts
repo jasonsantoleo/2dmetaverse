@@ -7,8 +7,6 @@ import bcrypt from 'bcrypt';
 import client from '@repo/db/client'
 import jwt from "jsonwebtoken";
 import { JWTPASSWORD } from "../../config.js";
-import { any } from "zod";
-import { log } from "console";
 
 
 
@@ -37,7 +35,9 @@ router.get('/',(req,res)=>{
 })
   
 router.post('/signup',async(req,res)=>{
+  console.log(req.body);
     const parseData=SignUpSchema.safeParse(req.body)
+    
     if (!parseData.success){
          res.status(400).json({
             message:"failed",

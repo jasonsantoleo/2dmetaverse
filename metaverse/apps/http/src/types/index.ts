@@ -49,3 +49,11 @@ export const CreateMap=z.object({
         y:z.number()
     }))
 })
+declare global{
+    namespace Express{
+        export interface Request{
+            userId?:string,
+            role?:"Admin" | "User"
+        }
+    }
+}
