@@ -35,7 +35,7 @@ router.get('/',(req,res)=>{
 })
   
 router.post('/signup',async(req,res)=>{
-  console.log(req.body);
+  // console.log(req.body);
     const parseData=SignUpSchema.safeParse(req.body)
     
     if (!parseData.success){
@@ -45,7 +45,7 @@ router.post('/signup',async(req,res)=>{
         })
         return  
     }
-    console.log(parseData|| null)
+    // console.log(parseData|| null)
     const hashedPassword=await hashPassword(parseData.data?.password)
     const user=await client.user.create({
       data:{
@@ -61,7 +61,7 @@ router.post('/signup',async(req,res)=>{
 
 router.post('/signin',async(req,res)=>{
   const parseData=SignInSchema.safeParse(req.body)
-  console.log(parseData);
+  // console.log(parseData);
   
   if (!parseData.success){
     res.status(400).json({
@@ -69,12 +69,16 @@ router.post('/signin',async(req,res)=>{
     })
     return 
   }
+  // console.log(parseData.data);
   try {
     const user=await client.user.findUnique({
       where:{
         username:parseData.data?.username
       }
     })
+    // console.log(user,'user found');
+    
+    // console.log(user);
     if (!user){
       res.status(403).json({
         message:'user not found'
@@ -120,6 +124,14 @@ router.get('space',async(req,res)=>{
     imageUrl:s.thumbnail,
     name:s.name
   })))
+})
+router.get('/avatar',async(req,res)=>{
+  const avatar=await client.avatar.findMany()
+  res.json({avatars:avatar.map((x)=>({
+    id:x.id,
+    imageUrl:x.imageUrl,
+    name:x.name
+  }))})
 })
 
 router.use('/user',userRouter)

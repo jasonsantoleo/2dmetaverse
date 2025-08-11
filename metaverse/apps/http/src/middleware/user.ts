@@ -11,17 +11,19 @@ type JWTpayload={
 }
 export const userMiddleware=(req:Request,res:Response,Next:NextFunction)=>{
     const token=req.headers['authorization']?.split(' ')[1]
-    console.log(token);
+    // console.log(token,'token');
     if (!token){
-        res.status(404).json({
+        res.status(403).json({
             message:"Token not found"
         })
         return
     }
-    console.log(token,'token');
+    // console.log(token,'token');
     try {
         const decoded=jwt.verify(token,JWTPASSWORD) as {userId:string ,avatarId:string}
+        // console.log(decoded,'decoded');
         req.userId=decoded.userId
+        console.log(req.userId);
         Next()
     } catch (e) {
         res.status(401).json({
